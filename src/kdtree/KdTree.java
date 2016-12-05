@@ -230,17 +230,18 @@ public class KdTree<Point extends PointI> //KdTree de points (qui descendent de 
 
 // Calcul de la dimension de la coupe (il est possible de commencer par
 // d=depth%3)
-
+		int d = depth % dimension();
+		
 // Trier le tableau de point en fonction de la dimension choisi
 // (cela permet d’obtenir la médiane et son indice)
-		
+		points.sort((p1, p2) -> p1.get(d) - p2.get(d));
 
 // Partager le tableau en deux tableaux (indice inférieur et supérieur à médiane)
 // left_points, right_points
 
 // Créer récursivement deux sous arbres
-			left_child = buildTree(left_points,depth+1,max_depth);
-			right_child = buildTree(right_points,depth+1,max_depth);
+		left_child = buildTree(left_points,depth+1,max_depth);
+		right_child = buildTree(right_points,depth+1,max_depth);
 
 // Créer le nouveau noeud de profondeur depth et le retourner
 }
