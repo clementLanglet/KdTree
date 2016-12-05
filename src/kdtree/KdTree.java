@@ -2,10 +2,11 @@ package kdtree;
 
 import java.util.ArrayList;
 
-public class KdTree<Point extends PointI>
+public class KdTree<Point extends PointI> //KdTree de points (qui descendent de PointI)
 {
-	/** A node in the KdTree
+	/** A node in the KdTree (un noeud)
 	 */
+	//Underscore en C veut dire private
 	public class KdNode 
 	{
 		KdNode child_left_, child_right_;
@@ -61,7 +62,7 @@ public class KdTree<Point extends PointI>
 	 */
 	KdTree(int dim, ArrayList<Point> points, int max_depth) {
 		this.dim_ = dim;
-		this.n_points_ = points.size();
+		// this.n_points_ = points.size(); inutile
 		
 		//TODO: replace by a balanced initialization
 		this.n_points_=0;
@@ -75,7 +76,7 @@ public class KdTree<Point extends PointI>
 	/// Accessors ///
 	/////////////////
 
-	int dimension() { return dim_; }
+	int dimension() { return dim_; } //Rien devant int veut dire package protected
 
 	int nb_points() { return n_points_; }
 
@@ -150,7 +151,7 @@ public class KdTree<Point extends PointI>
 	/// Helper Function ///
 	///////////////////////
 
-    /** Add the points in the leaf nodes of the subrre defined by root 'node'
+    /** Add the points in the leaf nodes of the subtree defined by root 'node'
      * to the array 'point'
      */
 	private void getPointsFromLeaf(KdNode node, ArrayList<Point> points)
@@ -203,6 +204,46 @@ public class KdTree<Point extends PointI>
         else
             return contains(node.child_right_, p);
 	}
+	
+	private KdNode buildTree(ArrayList<Point> points, int depth, int max_depth) {
+// TERMINAISON : 
+// si points.size()==0 retourner null (sous-arbre vide)
+		if(points.size() == 0){
+			return null;
+		};
+
+// TRAITEMENT SPECIAL pour le problème de la quantization
+// if depth == max_depth créer un noeud feuille comportant le barycentre des points restant
+		if(depth == max_depth){
+			int dim = dimension();
+			int[] s = new int[dim]; //le barycentre
+			for(int i = depth; i < points.size(); i++){ //le point actuel
+				points.get(i).div(dim);
+				for(int d = 0; d < dim; d++){ //d la dimension dans laquelle on récupère valeur
+					s[d] += points.get(i).get(d);
+				}
+			}
+			Point p;
+			p.v = s;
+			KdNode bar = new KdNode(p, 0);
+		}
+
+// Calcul de la dimension de la coupe (il est possible de commencer par
+// d=depth%3)
+
+// Trier le tableau de point en fonction de la dimension choisi
+// (cela permet d’obtenir la médiane et son indice)
+		
+
+// Partager le tableau en deux tableaux (indice inférieur et supérieur à médiane)
+// left_points, right_points
+
+// Créer récursivement deux sous arbres
+			left_child = buildTree(left_points,depth+1,max_depth);
+			right_child = buildTree(right_points,depth+1,max_depth);
+
+// Créer le nouveau noeud de profondeur depth et le retourner
+}
 	
 }
 

@@ -4,8 +4,13 @@ public abstract class PointI
 {
 	protected int v[]; 
 
+
 	public int get(int i) {
 		return v[i];
+	}
+	
+	public int getDim(){
+		return v.length;	
 	}
 
 	public void add(PointI p) {
