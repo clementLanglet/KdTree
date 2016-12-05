@@ -226,6 +226,7 @@ public class KdTree<Point extends PointI> //KdTree de points (qui descendent de 
 			Point p;
 			p.v = s;
 			KdNode bar = new KdNode(p, 0);
+			return bar;
 		}
 
 // Calcul de la dimension de la coupe (il est possible de commencer par
@@ -256,7 +257,8 @@ public class KdTree<Point extends PointI> //KdTree de points (qui descendent de 
 		KdNode right_child = buildTree(right_points,depth+1,max_depth);
 
 // Créer le nouveau noeud de profondeur depth et le retourner
-		
+		KdNode n = new KdNode(med, d);
+		return n;
 }
 	
 }
