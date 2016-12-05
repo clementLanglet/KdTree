@@ -26,7 +26,7 @@ public class Main
 /////////////////////////////////////////////////////////////////
 //TODO: replace this naive image copy by the quantization
 /////////////////////////////////////////////////////////////////
-            for (int y = 0; y < imgHeight; y++) {
+/*            for (int y = 0; y < imgHeight; y++) {
                 for (int x = 0; x < imgWidth; x++) {
                     int Color = img.getRGB(x,y);
                     int R = (Color >> 16) & 0xff;
@@ -40,8 +40,32 @@ public class Main
                                           | resB;
                     res_img.setRGB(x,y,cRes);
                 }
-            }
+            }*/
 /////////////////////////////////////////////////////////////////
+// Quantization
+/////////////////////////////////////////////////////////////////
+            ArrayList<Point3i> tab_pixel = new ArrayList<Point3i>();
+            for (int y = 0; y < imgHeight; y++){
+            	for (int x = 0; x < imgWidth; x++) {
+            		int Color = img.getRGB(x, y);
+                    int R = (Color >> 16) & 0xff;
+                    int G = (Color >> 8) & 0xff;
+                    int B = Color & 0xff;
+                    
+                    Point3i p = new Point3i(R, G, B);
+            		tab_pixel.add(p);
+            	}
+            }
+      
+            
+            KdTree tree = new KdTree(3);
+            tree.buildTree(tab_pixel, 0, 8); //256 couleurs
+            ArrayList<Point3i> palette_colors = new ArrayList<Point3i>();
+            tree.getPointsFromLeaf(palette_colors);
+            
+            
+            
+/////////////////////////////////////////////////////////////////            
 
             ImageIO.write(id_img, "jpg", new File("ResId.jpg"));
             ImageIO.write(res_img, "jpg", new File("ResColor.jpg"));

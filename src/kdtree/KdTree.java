@@ -205,7 +205,7 @@ public class KdTree<Point extends PointI> //KdTree de points (qui descendent de 
             return contains(node.child_right_, p);
 	}
 	
-	private KdNode buildTree(ArrayList<Point> points, int depth, int max_depth) {
+	public KdNode buildTree(ArrayList<Point> points, int depth, int max_depth) {
 // TERMINAISON : 
 // si points.size()==0 retourner null (sous-arbre vide)
 		if(points.size() == 0){
@@ -225,7 +225,7 @@ public class KdTree<Point extends PointI> //KdTree de points (qui descendent de 
 			}
 			Point p;
 			p.v = s;
-			KdNode bar = new KdNode(p, 0);
+			KdNode bar = new KdNode(p, depth % dimension());
 			return bar;
 		}
 
