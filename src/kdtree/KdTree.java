@@ -235,15 +235,28 @@ public class KdTree<Point extends PointI> //KdTree de points (qui descendent de 
 // Trier le tableau de point en fonction de la dimension choisi
 // (cela permet d’obtenir la médiane et son indice)
 		points.sort((p1, p2) -> p1.get(d) - p2.get(d));
+		int l = points.size();
+		int i_med = l/2;
+		Point med = points.get(i_med);
+		
 
 // Partager le tableau en deux tableaux (indice inférieur et supérieur à médiane)
 // left_points, right_points
+		ArrayList<Point> left_points;
+		ArrayList<Point> right_points;
+		for(int i = 0; i < i_med; i++){
+			left_points.add(points.get(i));
+		}
+		for(int i = i_med+1; i < l; i++){
+			right_points.add(points.get(i));
+		}
 
 // Créer récursivement deux sous arbres
-		left_child = buildTree(left_points,depth+1,max_depth);
-		right_child = buildTree(right_points,depth+1,max_depth);
+		KdNode left_child = buildTree(left_points,depth+1,max_depth);
+		KdNode right_child = buildTree(right_points,depth+1,max_depth);
 
 // Créer le nouveau noeud de profondeur depth et le retourner
+		
 }
 	
 }
